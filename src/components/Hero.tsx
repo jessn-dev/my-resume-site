@@ -91,6 +91,10 @@ export default function Hero() {
     const [activeSide, setActiveSide] = useState<"left" | "right" | null>(null);
     const [isMobile, setIsMobile] = useState(false);
 
+    // Typing state for the code snippet
+    const [codeTypedText, setCodeTypedText] = useState("");
+    const codeFullText = "while(alive) { drink(coffee); code(); }";
+
     const typedText = useTypewriter("Hi, I'm Jesse Ngolab");
 
     useEffect(() => {
@@ -98,6 +102,23 @@ export default function Hero() {
         checkMobile();
         window.addEventListener("resize", checkMobile);
         return () => window.removeEventListener("resize", checkMobile);
+    }, []);
+
+    // Logic for the code block typing animation
+    useEffect(() => {
+        let i = 0;
+        const startTimeout = setTimeout(() => {
+            const typingInterval = setInterval(() => {
+                setCodeTypedText(codeFullText.slice(0, i));
+                i++;
+                if (i > codeFullText.length) {
+                    clearInterval(typingInterval);
+                }
+            }, 60);
+            return () => clearInterval(typingInterval);
+        }, 1000); // Starts slightly after page load
+
+        return () => clearTimeout(startTimeout);
     }, []);
 
     const handleInteraction = useCallback((side: "left" | "right", type: "hover" | "click") => {
@@ -125,51 +146,62 @@ export default function Hero() {
             </div>
 
             <div className="relative z-10 flex w-full flex-col items-center justify-center gap-8 px-6 md:flex-row md:px-12 lg:px-24">
+                {/* Designer Side (Left) */}
                 <div className={`order-2 flex w-full flex-col items-center gap-6 text-center transition-all duration-700 ease-out md:order-1 md:w-1/3 md:items-end md:text-right ${activeSide === "right" ? "opacity-30 blur-sm scale-95" : "opacity-100 scale-100"}`}>
                     <h2 className={`text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter transition-colors duration-300 drop-shadow-2xl ${activeSide === "left" ? "text-purple-400" : "text-white"}`}>
                         Pixel Pusher.
                     </h2>
                     <p className="max-w-[350px] text-base md:text-lg font-medium leading-relaxed text-slate-400">
-                        <i>I'm not a professional, I'm just a hobbyist designer with expensive software  creating UI designs avoiding the usual and adding strange delightful surprises.</i>
+                        <i>I'm not a professional; I'm just a hobbyist designer with an Adobe Creative Cloud subscription, creating UI designs that avoid the usual and add strange, delightful surprises.</i>
                     </p>
                 </div>
 
+                {/* Portrait Circle Container */}
                 <div className="order-1 relative h-[350px] w-[350px] shrink-0 md:order-2 md:h-[500px] md:w-[500px] lg:h-[600px] lg:w-[600px]">
                     <div className={`absolute inset-0 rounded-full bg-gradient-to-r from-purple-600/40 to-blue-600/40 blur-[60px] transition-opacity duration-700 ${activeSide ? "opacity-100" : "opacity-60"}`}></div>
                     <div className="relative h-full w-full overflow-hidden rounded-full isolate ring-4 ring-white/10 shadow-2xl">
                         <div role="button" tabIndex={0} className="absolute left-0 top-0 z-50 h-full w-1/2 cursor-pointer focus:outline-none" onMouseEnter={() => handleInteraction("left", "hover")} onMouseLeave={handleMouseLeave} onClick={() => handleInteraction("left", "click")}></div>
                         <div role="button" tabIndex={0} className="absolute right-0 top-0 z-50 h-full w-1/2 cursor-pointer focus:outline-none" onMouseEnter={() => handleInteraction("right", "hover")} onMouseLeave={handleMouseLeave} onClick={() => handleInteraction("right", "click")}></div>
+
+                        {/* Coder Image */}
                         <div className="absolute inset-0 z-0 h-full w-full bg-[#0a0a0a]">
                             <Image src={coderPortrait} alt="Coder Portrait" fill className={`object-cover object-top transition-transform duration-700 ease-out ${activeSide === "right" ? "scale-110" : "scale-100"}`} priority />
                         </div>
+
+                        {/* Designer Image with ClipPath */}
                         <div className="absolute inset-0 z-10 h-full w-full bg-[#0a0a0a] transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]" style={{ clipPath: getDesignerClipPath(), WebkitClipPath: getDesignerClipPath() }}>
                             <Image src={creativePortrait} alt="Designer Portrait" fill className={`object-cover object-top transition-transform duration-700 ease-out ${activeSide === "left" ? "scale-110" : "scale-100"}`} priority />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
                         </div>
-
-                        {/* Vertical line opacity set to 0 to remove visible streak */}
-                        <div
-                            className={`absolute left-[55%] top-0 h-full w-[2px] bg-white/20 z-20 transition-opacity duration-500 opacity-0`}
-                            style={{ transform: "skew(-15deg)" }}
-                        ></div>
                     </div>
                 </div>
 
+                {/* Coder Side (Right) */}
                 <div className={`order-3 flex w-full flex-col items-center gap-6 text-center transition-all duration-700 ease-out md:w-1/3 md:items-start md:text-left ${activeSide === "left" ? "opacity-30 blur-sm scale-95" : "opacity-100 scale-100"}`}>
                     <h2 className={`text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter transition-colors duration-300 drop-shadow-2xl ${activeSide === "right" ? "text-blue-400" : "text-white"}`}>
                         &lt;FullStack Pancake/&gt;
                     </h2>
-                    <p className="max-w-[350px] text-base md:text-lg font-medium leading-relaxed text-slate-400">
-                        <i>I write code that works, build pipelines that scale, and then try to hack them just to make sure I was right the first time.</i>
+                    <p className="text-base md:text-lg font-light leading-relaxed text-slate-400">
+                        <span className="italic">
+                            I write code
+                            {/* NEW: Typing Animation Block */}
+                            <code className="mx-2 px-2 py-1 rounded bg-white/[0.03] text-blue-400 font-mono text-sm border border-white/10 inline-flex items-center min-w-[315px]">
+                                <span>{codeTypedText}</span>
+                                <span className="animate-pulse border-r-2 border-blue-500 h-4 ml-1"></span>
+                            </code>
+                            that works, build pipelines that scale, and then attempt to <span className="text-[#e30909] font-mono font-bold tracking-tight uppercase">breach</span> them just to prove they're <span className="text-[#39d353] font-mono font-bold tracking-tight uppercase">secure</span>.
+                        </span>
                     </p>
                 </div>
             </div>
 
+            {/* Google-style Search Bar & Navigation */}
             <div className="relative z-20 flex w-full flex-col items-center px-6">
                 <div className="group flex h-14 md:h-16 w-full max-w-[720px] items-center rounded-full border border-gray-500/30 bg-[#202124] px-6 shadow-xl transition-all hover:bg-[#303134] hover:shadow-2xl hover:border-gray-500/50">
                     <div className="pr-4 text-gray-400">
                         <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
                     </div>
+                    {/* Maps the search value to your main greeting typewriter */}
                     <input type="text" readOnly value={typedText} className="flex-1 bg-transparent text-lg md:text-xl text-[#e8eaed] outline-none font-sans" aria-label="Search" />
                     <div className="flex items-center gap-5 pl-4 border-l border-gray-600/50 h-8">
                         <svg className="h-6 w-6 cursor-pointer text-[#8ab4f8] hover:text-white transition-colors" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"></path><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"></path></svg>
