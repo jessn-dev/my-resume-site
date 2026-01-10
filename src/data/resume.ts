@@ -144,28 +144,6 @@ export const philosophyData = {
     ]
 };
 
-// Keep your existing aboutBento, philosophyData, and experience exports...
-
-export const education = [
-    {
-        school: "Western Governors University",
-        degree: "M.S. Cybersecurity and Information Assurance",
-        degree_type: "Master's Degree",
-        period: "In Progress",
-        location: "Salt Lake City, UT (Remote)",
-        link: "https://www.wgu.edu/"
-    },
-    {
-        school: "Western Governors University",
-        degree: "B.S. Cybersecurity and Information Assurance",
-        degree_type: "Bachelor's Degree",
-        period: "2020 — 2023",
-        location: "Baguio City, Philippines",
-        link: "https://www.uc-bcf.edu.ph/"
-    }
-];
-
-
 export const schools = [
     {
         school: "Western Governors University",
