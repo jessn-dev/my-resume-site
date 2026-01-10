@@ -12,7 +12,7 @@ export async function sendEmail(formData: FormData) {
     try {
         const { data, error } = await resend.emails.send({
             from: 'Contact Form <onboarding@resend.dev>',
-            to: ['jessengolab.dev@gmail.com'], // Replace with your actual email
+            to: ['your-email@example.com'], // Replace with your actual email
             subject: `New Portfolio Message from ${name}`,
             /* FIX: Changed reply_to to replyTo */
             replyTo: email,
