@@ -5,40 +5,48 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-slate-50 text-slate-900;
+    background-color: #000;
+    color: #cbd5e1;
   }
 }
 
-/* Custom Animation for the Halo Effect */
-@keyframes float {
-  0% { transform: translate(0px, 0px) scale(1); }
-  33% { transform: translate(30px, -50px) scale(1.1); }
-  66% { transform: translate(-20px, 20px) scale(0.9); }
-  100% { transform: translate(0px, 0px) scale(1); }
+/* =========================================
+   STRIPE GRADIENT ANIMATIONS
+   ========================================= */
+
+/* 1. The Moving Blob Animation */
+/* Moves the orbs in a random circular-ish pattern so they never look static */
+@keyframes blob-bounce {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(20px, -50px) scale(1.1);
+  }
+  50% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  75% {
+    transform: translate(20px, 50px) scale(1.05);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
 }
 
+/* 2. Utility Class to Apply the Animation */
 .animate-blob {
-  animation: float 7s infinite;
+  animation: blob-bounce 10s infinite ease-in-out;
 }
 
+/* 3. Animation Delays */
+/* These prevent all blobs from moving in sync */
 .animation-delay-2000 {
   animation-delay: 2s;
 }
-
 .animation-delay-4000 {
   animation-delay: 4s;
 }
-
-/* Aurora Animation Keyframes */
-@keyframes aurora {
-  from {
-    background-position: 50% 50%, 50% 50%;
-  }
-  to {
-    background-position: 350% 50%, 350% 50%;
-  }
-}
-
-.animate-aurora {
-  animation: aurora 60s linear infinite;
+.animation-delay-long {
+  animation-delay: 6s;
 }
