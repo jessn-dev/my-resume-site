@@ -11,16 +11,22 @@ export async function sendEmail(formData: FormData) {
 
     try {
         const { data, error } = await resend.emails.send({
-            from: 'Contact Form <onboarding@resend.dev>', // Update this once you have a domain
-            to: ['your-email@example.com'], // Where you want to receive emails
+            from: 'Contact Form <onboarding@resend.dev>',
+            to: ['your-email@example.com'], // Replace with your actual email
             subject: `New Portfolio Message from ${name}`,
-            reply_to: email,
+            /* FIX: Changed reply_to to replyTo */
+            replyTo: email,
             text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
         });
 
-        if (error) return { success: false, error };
+        if (error) {
+            console.error("Resend Error:", error);
+            return { success: false };
+        }
+
         return { success: true };
     } catch (err) {
-        return { success: false, error: err };
+        console.error("Server Action Error:", err);
+        return { success: false };
     }
 }
