@@ -2,7 +2,8 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    /* Ensure no native smooth scrolling interferes */
+    scroll-behavior: auto;
   }
   body {
     background-color: #000;
@@ -11,42 +12,51 @@
 }
 
 /* =========================================
-   STRIPE GRADIENT ANIMATIONS
+   LENIS SMOOTH SCROLL REQUIRED STYLES
    ========================================= */
-
-/* 1. The Moving Blob Animation */
-/* Moves the orbs in a random circular-ish pattern so they never look static */
-@keyframes blob-bounce {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
-  25% {
-    transform: translate(20px, -50px) scale(1.1);
-  }
-  50% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-  75% {
-    transform: translate(20px, 50px) scale(1.05);
-  }
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
+html.lenis, html.lenis body {
+  height: auto;
 }
 
-/* 2. Utility Class to Apply the Animation */
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* =========================================
+   CUSTOM ANIMATIONS (Blob Bounce)
+   ========================================= */
+@keyframes blob-bounce {
+  0% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(20px, -50px) scale(1.1); }
+  50% { transform: translate(-20px, 20px) scale(0.9); }
+  75% { transform: translate(20px, 50px) scale(1.05); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
 .animate-blob {
   animation: blob-bounce 10s infinite ease-in-out;
 }
 
-/* 3. Animation Delays */
-/* These prevent all blobs from moving in sync */
 .animation-delay-2000 {
   animation-delay: 2s;
 }
+
 .animation-delay-4000 {
   animation-delay: 4s;
 }
+
 .animation-delay-long {
   animation-delay: 6s;
 }

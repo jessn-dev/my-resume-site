@@ -81,17 +81,31 @@ export default function Hero() {
             </div>
 
             {/* =========================================================
-          1. IMAGE SECTION (Resized & Centered)
+          1. MAIN CONTENT ROW (Text - Image - Text)
          ========================================================= */}
-            {/* RESIZED: max-w-3xl (approx 768px).
-          This is slightly wider than the search bar (584px), creating a perfect pyramid shape.
-      */}
-            <div className="relative z-10 w-full max-w-3xl px-4 mb-8">
+            {/* max-w-7xl gives us enough width to fit text on sides + image in center */}
+            <div className="relative z-10 flex w-full max-w-7xl flex-col items-center justify-center gap-8 px-4 md:flex-row mb-8">
 
-                {/* HEIGHT ADJUSTED: h-[300px] sm:h-[400px].
-          Reduced height prevents it from looking stretched at the smaller width.
-        */}
-                <div className="relative h-[300px] sm:h-[400px] w-full overflow-hidden bg-transparent isolate">
+                {/* --- LEFT TEXT: DESIGNER --- */}
+                {/* On mobile: Order 2 (Below image). On Desktop: Order 1 (Left of image) */}
+                <div
+                    className={`
+            order-2 flex w-full flex-col items-center gap-3 text-center transition-all duration-700 md:order-1 md:w-1/3 md:items-end md:text-right
+            ${activeSide === "right" ? "opacity-30 blur-sm scale-95" : "opacity-100 scale-100"}
+          `}
+                >
+                    <h2 className={`text-4xl font-extrabold tracking-tight transition-colors duration-300 ${activeSide === "left" ? "text-purple-300" : "text-white"}`}>
+                        Designer.
+                    </h2>
+                    <p className="max-w-[300px] text-sm font-medium leading-relaxed text-slate-300">
+                        Hobbyist designer creating UI designs avoiding the usual and adding strange delightful surprises.
+                    </p>
+                </div>
+
+
+                {/* --- CENTER IMAGE --- */}
+                {/* Order 1 (Top) on Mobile. Order 2 (Center) on Desktop. */}
+                <div className="order-1 relative h-[350px] w-[350px] shrink-0 overflow-hidden rounded-full bg-transparent isolate md:order-2 sm:h-[450px] sm:w-[450px]">
 
                     {/* TRIGGERS */}
                     <div
@@ -135,11 +149,25 @@ export default function Hero() {
                             />
                         </div>
                     </div>
-
-                    {/* LABELS (Scaled down to fit new size: text-4xl) */}
-                    <span className={`pointer-events-none absolute z-40 top-1/2 -translate-y-1/2 -translate-x-1/2 text-3xl sm:text-5xl font-extrabold text-white drop-shadow-xl tracking-tight transition-all duration-700 ${activeSide === "left" ? "left-1/2 text-purple-300 scale-110" : activeSide === "right" ? "left-[5%] opacity-0 blur-sm" : "left-1/4 opacity-100 blur-0"}`}>Designer.</span>
-                    <span className={`pointer-events-none absolute z-40 top-1/2 -translate-y-1/2 -translate-x-1/2 text-3xl sm:text-5xl font-extrabold text-white drop-shadow-xl tracking-tight transition-all duration-700 ${activeSide === "right" ? "left-1/2 text-blue-300 scale-110" : activeSide === "left" ? "left-[95%] opacity-0 blur-sm" : "left-3/4 opacity-100 blur-0"}`}>&lt;Coder /&gt;</span>
                 </div>
+
+
+                {/* --- RIGHT TEXT: CODER --- */}
+                {/* Order 3 on both */}
+                <div
+                    className={`
+            order-3 flex w-full flex-col items-center gap-3 text-center transition-all duration-700 md:w-1/3 md:items-start md:text-left
+            ${activeSide === "left" ? "opacity-30 blur-sm scale-95" : "opacity-100 scale-100"}
+          `}
+                >
+                    <h2 className={`text-4xl font-extrabold tracking-tight transition-colors duration-300 ${activeSide === "right" ? "text-blue-300" : "text-white"}`}>
+                        &lt;Coder /&gt;
+                    </h2>
+                    <p className="max-w-[300px] text-sm font-medium leading-relaxed text-slate-300">
+                        Cybersecurity enthusiast and developer, building secure networks and exploring the digital frontier.
+                    </p>
+                </div>
+
             </div>
 
 
@@ -150,7 +178,6 @@ export default function Hero() {
 
                 <div className="group flex h-12 w-full max-w-[584px] items-center rounded-full border border-[#5f6368]/30 bg-[#303134]/80 px-4 shadow-md backdrop-blur-md transition-shadow hover:bg-[#303134] hover:shadow-lg hover:shadow-black/50">
 
-                    {/* SEARCH ICON */}
                     <div className="pr-3 text-[#9aa0a6]">
                         <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
                             <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
@@ -164,7 +191,6 @@ export default function Hero() {
                         className="flex-1 bg-transparent text-[16px] text-[#e8eaed] outline-none"
                     />
 
-                    {/* ICONS */}
                     <div className="flex items-center gap-3 pl-3">
                         <svg className="h-5 w-5 cursor-pointer text-[#8ab4f8]" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"></path><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"></path></svg>
                         <svg className="h-5 w-5 cursor-pointer text-[#8ab4f8]" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
