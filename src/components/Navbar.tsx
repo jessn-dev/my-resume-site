@@ -54,7 +54,7 @@ export default function Navbar() {
 
                     {/* Resume Button */}
                     <a
-                        href="/resume.pdf"
+                        href="https://drive.google.com/file/d/1KW0UZZvpYgDZj1GqBMIPGpSP_8VdzoX2/view?usp=drive_link"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="rounded-full border border-slate-700 bg-slate-900/50 px-6 py-2.5 text-sm font-semibold text-white transition-all hover:bg-white hover:text-black hover:border-white"
