@@ -12,10 +12,10 @@ export async function sendEmail(formData: FormData) {
     try {
         const { data, error } = await resend.emails.send({
             from: 'Contact Form <onboarding@resend.dev>',
-            to: ['your-email@example.com'], // Replace with your actual email
+            // FIX: This MUST be jessengolab.dev@gmail.com for the free tier
+            to: ['jessengolab.dev@gmail.com'],
             subject: `New Portfolio Message from ${name}`,
-            /* FIX: Changed reply_to to replyTo */
-            replyTo: email,
+            replyTo: email, // This stays as the user's email so you can reply to them
             text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
         });
 
