@@ -29,7 +29,7 @@ export default function Contact() {
                     Get in <span className="text-blue-500">Touch</span>.
                 </h2>
                 <p className="text-xl text-white/40 font-light">
-                    Have a project in mind or just want to say hi? My inbox is always open.
+                    Have a job or project in mind or just want to say hi? My inbox is always open.
                 </p>
             </div>
 
