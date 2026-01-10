@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google"; // 1. Keep your font import
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-// 2. Import the new SmoothScroll component
+// 1. Import Components
 import SmoothScroll from "@/components/SmoothScroll";
+import Preloader from "@/components/Preloader"; // <--- NEW IMPORT
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,12 +19,16 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        /* REMOVE "scroll-smooth" if it is here! */
         <html lang="en">
         <body className={inter.className}>
+
+        {/* 2. ADD PRELOADER HERE */}
+        <Preloader />
+
         <SmoothScroll>
             {children}
         </SmoothScroll>
+
         </body>
         </html>
     );

@@ -1,106 +1,97 @@
-import {
-    Code2,
-    Server,
-    Dumbbell,
-    ShieldCheck,
-    Terminal,
-    Cpu
-} from "lucide-react"; // You might need to install: npm install lucide-react
+"use client";
+
+import React, { useEffect, useRef, useState } from "react";
+import { Code2, Server, ShieldCheck, Cpu, Settings } from "lucide-react";
+import { aboutBento } from "@/data/resume";
+import CardSwap from "./ui/CardSwap";
+import PhilosophyTerminal from "./PhilosophyTerminal";
+
+const IconMap: Record<string, any> = { Code2, Server, ShieldCheck, Cpu };
+
+const PanelFrame = ({ title, children, className = "", status = "ACTIVE" }: any) => (
+    <div className={`relative flex flex-col rounded-3xl border border-slate-800 bg-slate-950/50 backdrop-blur-md overflow-hidden h-[600px] ${className}`}>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-black/60 shrink-0">
+            <div className="flex gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/40" />
+                <div className="w-3 h-3 rounded-full bg-amber-500/20 border border-amber-500/40" />
+                <div className="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/40" />
+            </div>
+            <div className="flex items-center gap-2">
+                <span className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.2em]">{title}</span>
+                <div className="h-1 w-1 rounded-full bg-blue-500 animate-pulse" />
+            </div>
+            <div className="flex items-center gap-3 text-slate-600">
+                <span className="text-[9px] font-mono hidden md:block">{status}</span>
+                <Settings size={12} className="opacity-50" />
+            </div>
+        </div>
+        <div className="flex-1 p-8 md:p-10 overflow-y-auto custom-scrollbar relative">
+            {children}
+        </div>
+    </div>
+);
 
 export default function About() {
-    return (
-        <section id="about" className="py-24 bg-slate-950 text-slate-300">
-            <div className="container mx-auto px-4">
+    const [isVisible, setIsVisible] = useState(false);
+    const sectionRef = useRef<HTMLElement>(null);
 
-                {/* Section Header */}
-                <div className="mb-16 max-w-2xl">
-                    <h2 className="text-4xl font-bold text-white mb-6">
-                        Beyond the <span className="text-blue-500">Code</span>.
-                    </h2>
-                    <p className="text-lg leading-relaxed text-slate-400">
-                        I am a Senior Developer with a passion for secure architecture and high-performance systems.
-                        My philosophy is simple: build robustly, document clearly, and never stop learning.
-                    </p>
+    useEffect(() => {
+        const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) { setIsVisible(true); observer.unobserve(entry.target); }
+        }, { threshold: 0.1 });
+        if (sectionRef.current) observer.observe(sectionRef.current);
+        return () => observer.disconnect();
+    }, []);
+
+    return (
+        <section id="about" ref={sectionRef} className="relative w-full min-h-fit bg-black text-slate-300 pt-32 pb-10 px-6 md:px-12 lg:px-20 overflow-visible">
+            <div suppressHydrationWarning className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+            <div className="relative z-10 w-full max-w-[1920px] mx-auto">
+                <div className={`mb-24 max-w-4xl transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+                    <h2 className="text-6xl md:text-8xl font-black text-white mb-8 tracking-tighter">Beyond the <span className="text-blue-500">Code</span>.</h2>
+                    <p className="text-xl md:text-2xl text-slate-400 leading-relaxed font-light">{aboutBento.header.description}</p>
                 </div>
 
-                {/* The Bento Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-                    {/* Card 1: The Main Narrative (Spans 2 columns) */}
-                    <div className="md:col-span-2 p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-slate-700 transition-colors">
-                        <div className="flex items-center gap-3 mb-4">
-                            <Code2 className="w-6 h-6 text-blue-400" />
-                            <h3 className="text-xl font-semibold text-white">Full Stack Engineering</h3>
-                        </div>
-                        <p className="text-slate-400 leading-relaxed mb-6">
-                            With over 8 years of experience, I specialize in the JavaScript ecosystem.
-                            I don't just write functions; I architect scalable solutions that can handle
-                            complex business logic without breaking a sweat.
-                        </p>
-                        {/* Tech Stack Pills */}
-                        <div className="flex flex-wrap gap-2">
-                            {["Next.js", "TypeScript", "React", "Node.js", "PostgreSQL", "AWS"].map((tech) => (
-                                <span key={tech} className="px-3 py-1 text-xs font-medium rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/20">
-                  {tech}
-                </span>
-                            ))}
-                        </div>
+                <div className="flex flex-col lg:flex-row gap-10 items-start justify-center mb-0">
+                    <div className="w-full lg:w-1/2 max-w-[620px] relative overflow-visible">
+                        <CardSwap delay={4500}>
+                            {aboutBento.cards.map((card, idx) => {
+                                const Icon = IconMap[card.icon];
+                                return (
+                                    <PanelFrame key={card.id} title={`DRIVE_0${idx + 1}`} status="STABLE">
+                                        <div className="flex flex-col h-full">
+                                            <div className="p-4 w-fit rounded-2xl bg-blue-500/10 text-blue-400 mb-8 border border-blue-500/20 shrink-0">{Icon && <Icon size={32} />}</div>
+                                            <h3 className="text-3xl font-bold text-white mb-6 tracking-tight shrink-0">{card.title}</h3>
+                                            <p className="text-lg text-slate-400 font-light leading-relaxed mb-8">{card.description}</p>
+                                            {card.tags && (
+                                                <div className="flex flex-wrap gap-2 mt-auto pt-4 shrink-0">
+                                                    {card.tags.map((tag) => (
+                                                        <span key={tag} className="px-3 py-1 text-[10px] font-mono rounded-full bg-blue-500/5 text-blue-400/60 border border-blue-500/10">{tag}</span>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </PanelFrame>
+                                );
+                            })}
+                        </CardSwap>
                     </div>
 
-                    {/* Card 2: The "Lab" / Infrastructure Interest */}
-                    <div className="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-slate-700 transition-colors relative overflow-hidden group">
-                        <div className="relative z-10">
-                            <div className="flex items-center gap-3 mb-4">
-                                <Server className="w-6 h-6 text-emerald-400" />
-                                <h3 className="text-xl font-semibold text-white">The Home Lab</h3>
+                    <aside className={`w-full lg:w-1/2 max-w-[620px] lg:sticky lg:top-32 transition-all duration-1000 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-20"}`}>
+                        <PanelFrame title="EXECUTION_LOG" status="LIVE">
+                            <div className="flex items-center gap-4 mb-8 shrink-0">
+                                <div className="p-3 rounded-2xl bg-green-500/10 text-green-400 border border-green-500/20"><Cpu size={28} /></div>
+                                <h3 className="text-2xl font-bold text-white tracking-tight">Philosophy</h3>
                             </div>
-                            <p className="text-slate-400 text-sm">
-                                I am a practitioner at heart. I maintain a fully segmented home lab designed to simulate
-                                real-world threats and test infrastructure. This controlled environment allows me to rigorously
-                                experiment with <strong> networking, virtualization, penetration testing, and hybrid cloud services </strong> while
-                                analyzing attack vectors and vulnerabilities firsthand.
-                            </p>
-                        </div>
-                        {/* Abstract visual decoration */}
-                        <Server className="absolute -bottom-4 -right-4 w-32 h-32 text-slate-800/50 group-hover:text-emerald-900/20 transition-colors" />
-                    </div>
-
-                    {/* Card 3: Security Mindset */}
-                    <div className="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-slate-700 transition-colors">
-                        <div className="flex items-center gap-3 mb-4">
-                            <ShieldCheck className="w-6 h-6 text-purple-400" />
-                            <h3 className="text-xl font-semibold text-white">Security First</h3>
-                        </div>
-                        <p className="text-slate-400 text-sm">
-                            Code is only as good as it is secure. I actively study cybersecurity principles
-                            (currently exploring CySA+ topics) to ensure my applications are hardened against vulnerabilities.
-                        </p>
-                    </div>
-
-                    {/* Card 4: Mentorship / Terminal */}
-                    <div className="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-slate-700 transition-colors">
-                        <div className="flex items-center gap-3 mb-4">
-                            <Terminal className="w-6 h-6 text-orange-400" />
-                            <h3 className="text-xl font-semibold text-white">DevOps & CI/CD</h3>
-                        </div>
-                        <p className="text-slate-400 text-sm">
-                            Automating the boring stuff allows us to focus on what matters. I build robust
-                            pipelines ensuring smooth deployments from commit to production.
-                        </p>
-                    </div>
-
-                    {/* Card 5: Discipline / Bodybuilding (Spans 1 column) */}
-                    <div className="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-slate-700 transition-colors group">
-                        <div className="flex items-center gap-3 mb-4">
-                            <Dumbbell className="w-6 h-6 text-red-400" />
-                            <h3 className="text-xl font-semibold text-white">Discipline</h3>
-                        </div>
-                        <p className="text-slate-400 text-sm">
-                            The consistency required for bodybuilding mirrors the discipline needed for
-                            clean code. Iteration, patience, and progressive overload apply to both the gym and the codebase.
-                        </p>
-                    </div>
-
+                            <div className="p-8 rounded-2xl bg-black/60 border border-slate-800/50 shadow-[inset_0_2px_20px_rgba(0,0,0,0.8)] flex flex-col justify-center min-h-[340px]">
+                                <PhilosophyTerminal />
+                            </div>
+                            <div className="mt-8 pt-6 border-t border-slate-800/50 flex justify-between items-center text-[9px] font-mono text-slate-500 tracking-[0.2em] uppercase shrink-0">
+                                <span>Kernel: 0x9FF22</span><span className="text-green-500">Security: Hardened</span>
+                            </div>
+                        </PanelFrame>
+                    </aside>
                 </div>
             </div>
         </section>
