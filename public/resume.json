@@ -1,0 +1,79 @@
+[
+  {
+    "id": 0,
+    "company": "Combs Enterprise",
+    "link": "combsenterprises.com",
+    "role": "DevOps Engineer",
+    "period": "Aug 2022 - Mar 2023",
+    "description": [
+      "Spearheaded SCM evaluation and implementation, proactively identifying and implementing process improvements to optimize build, release, and deployment workflows.",
+      "Developed new CI/CD pipelines using Jenkins and integrated with GitHub to enhance deployment efficiency and code quality.",
+      "Designed and automated infrastructure provisioning templates with Terraform to minimize human error and reduce setup time."
+    ],
+    "tags": ["Jenkins", "Terraform", "Kubernetes", "Splunk", "GitHub"]
+  },
+  {
+    "id": 1,
+    "company": "84.51°",
+    "link": "8451.com",
+    "role": "Software Engineer",
+    "period": "Sep 2018 - June 2022",
+    "description": [
+      "Developed scalable APIs in Java and Python to support critical data processing workloads.",
+      "Built CI/CD pipelines with TeamCity and Azure DevOps, integrated Maven/Gradle automation, and stored artifacts in Artifactory.",
+      "Managed Azure infrastructure using Terraform, optimizing cloud resource utilization."
+    ],
+    "tags": ["Java", "Python", "Azure DevOps", "Helm", "Prometheus"]
+  },
+  {
+    "id": 2,
+    "company": "PCCW LTD.",
+    "link": "pccw.com",
+    "role": "Senior Solutions Developer",
+    "period": "Mar 2018 - June 2018",
+    "description": [
+      "Led the technical partnership to modernize a mission-critical government application, re-architecting a tightly-coupled system into a scalable microservices architecture using SpringMVC and Angular 6, resulting in improved performance and maintainability.",
+      "Provided technical oversight to a team, ensuring code quality, scalability, and security while also developing comprehensive test cases for new and existing functionalities."
+    ],
+    "tags": ["Spring MVC", "Angular 6", "Microservices", "Java"]
+  },
+  {
+    "id": 3,
+    "company": "Accenture",
+    "link": "accenture.com",
+    "role": "Application Development Analyst",
+    "period": "Sep 2017 - Feb 2018",
+    "description": [
+      "Contributed to the continuous enhancement of a web-based machine-to-machine communication platform, implementing new REST API services and performing client-side validation with JavaScript.",
+      "Designed a new API by exposing and consuming an existing SOAP web service, using an intermediary that acts as a translator to reset WSDL files to a REST format.",
+      "Created new test cases, which improved code coverage by 70% and ensured the successful validation of new functionalities."
+    ],
+    "tags": ["Spring Boot", "Angular", "REST APIs", "SOAP"]
+  },
+  {
+    "id": 4,
+    "company": "OpenText",
+    "link": "opentext.com",
+    "role": "Product Support Specialist (EDI)",
+    "period": "Apr 2017 - Sep 2017",
+    "description": [
+      "Provided comprehensive on-call support and handled production issues by fixing errors in EDI data and Oracle databases.",
+      "Improved system reliability through the development of automation solutions and by providing assistance with database management, troubleshooting, and optimization.",
+      "Monitored various EDI transactions like PO, Invoices, and Load Tender appropriately."
+    ],
+    "tags": ["EDI", "Oracle DB", "Automation", "SQL"]
+  },
+  {
+    "id": 5,
+    "company": "Texas Instruments",
+    "link": "ti.com",
+    "role": "Applications Developer",
+    "period": "Mar 2016 - Apr 2017",
+    "description": [
+      "Developed and implemented an internal web application using JSP, Spring MVC, Hibernate, and Oracle.",
+      "Optimized existing SQL queries that extracted data from different plant facilities, reducing the wait time from 5 minutes to 2 minutes.",
+      "Improved regulatory adherence and efficiency by developing a new internal web app to store all reports, which streamlined compliance audits and review processes."
+    ],
+    "tags": ["Java", "Hibernate", "Spring MVC", "SQL Optimization"]
+  }
+]
