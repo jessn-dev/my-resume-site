@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+@theme {
+  --color-surface-100: #202124;
+  --color-surface-200: #303134;
+  --color-surface-300: #3c4043;
+  --color-border-100: #5f6368;
+}
+
 @layer base {
   html {
     /* Ensure no native smooth scrolling interferes */
@@ -8,6 +15,34 @@
   body {
     background-color: #000;
     color: #cbd5e1;
+    position: relative;
+  }
+  
+  /* Premium Engineering Dot Grid */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    /* Increase dot size and opacity slightly */
+    background-image: radial-gradient(rgba(255, 255, 255, 0.25) 1.5px, transparent 1.5px);
+    background-size: 32px 32px;
+    background-position: center center;
+    -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 20%, rgba(0,0,0,0) 80%);
+    mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 20%, rgba(0,0,0,0) 80%);
+    pointer-events: none;
+    /* Removed z-index: -1 so it sits above the body background but behind content */
+  }
+}
+
+/* =========================================
+   ACCESSIBILITY: REDUCED MOTION
+   ========================================= */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 

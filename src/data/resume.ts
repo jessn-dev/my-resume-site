@@ -1,7 +1,7 @@
 export const aboutBento = {
     header: {
         title: "Beyond the Code",
-        description: "💻 Engineer. 🥋 Martial Artist. 📸 Photographer. I bridge the gap between creative exploration and technical rigor. " +
+        description: "I bridge the gap between creative exploration and technical rigor. " +
             "From mastering the flow of a Jiu-Jitsu match to architecting secure digital environments, I am driven by a continuous improvement mindset. " +
             "My blueprint for success? Build, Secure, Document, and never stop learning."
     },
@@ -54,6 +54,7 @@ export const experiences = [
     {
         id: 0,
         company: "Combs Enterprise",
+        link: "combsenterprises.com",
         role: "DevOps Engineer",
         period: "Aug 2022 - Mar 2023",
         description: "Spearheaded SCM evaluation and implemented new CI/CD pipelines using Jenkins and GitHub. " +
@@ -63,6 +64,7 @@ export const experiences = [
     {
         id: 1,
         company: "84.51°",
+        link: "8451.com",
         role: "Software Engineer",
         period: "Sep 2018 - June 2022",
         description: "Developed scalable APIs in Java and Python while managing Azure infrastructure via Terraform. " +
@@ -72,6 +74,7 @@ export const experiences = [
     {
         id: 2,
         company: "PCCW Global",
+        link: "pccw.com",
         role: "Senior Solutions Developer",
         period: "Mar 2018 - June 2018",
         description: "Led the modernization of a mission-critical government application into a scalable microservices " +
@@ -81,6 +84,7 @@ export const experiences = [
     {
         id: 3,
         company: "Accenture",
+        link: "accenture.com",
         role: "App Dev Analyst",
         period: "Sep 2017 - Feb 2018",
         description: "Implemented REST API services and modernized legacy SOAP web services. Developed internal tools using Spring Boot and Angular, " +
@@ -90,6 +94,7 @@ export const experiences = [
     {
         id: 4,
         company: "OpenText",
+        link: "opentext.com",
         role: "Product Support Specialist",
         period: "Apr 2017 - Sep 2017",
         description: "Provided comprehensive production support for EDI transactions and Oracle databases. " +
@@ -99,6 +104,7 @@ export const experiences = [
     {
         id: 5,
         company: "Texas Instruments",
+        link: "ti.com",
         role: "Applications Developer",
         period: "Mar 2016 - Apr 2017",
         description: "Developed internal web applications using Spring MVC, Hibernate, and Oracle. " +

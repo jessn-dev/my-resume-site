@@ -2,6 +2,10 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Search } from "lucide-react";
+import Magnetic from "./Magnetic";
+import HoverScrambleText from "./HoverScrambleText";
 
 export default function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -21,9 +25,22 @@ export default function Navbar() {
         { name: "Contact", href: "#contact" },
     ];
 
+    const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+        e.preventDefault();
+        const target = document.querySelector(targetId);
+        if (target) {
+            const offset = 100; // Offset for fixed navbar
+            const targetPosition = target.getBoundingClientRect().top + window.scrollY - offset;
+            window.scrollTo({
+                top: targetPosition,
+                behavior: "smooth"
+            });
+        }
+        setMobileMenuOpen(false);
+    };
+
     return (
         <nav
-            // REMOVED "border-b border-white/5" from the isScrolled string below
             className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 ${
                 isScrolled
                     ? "bg-black/80 py-4 shadow-lg backdrop-blur-md"
@@ -35,37 +52,60 @@ export default function Navbar() {
                 {/* --- LOGO --- */}
                 <Link
                     href="#home"
-                    className="text-2xl font-black tracking-tighter text-white transition-transform hover:scale-105"
+                    onClick={(e) => handleScrollTo(e, "#home")}
+                    className="text-2xl font-black tracking-tighter text-white transition-transform hover:scale-105 flex items-center gap-1"
                 >
-                    JBN<span className="text-blue-500">.</span>
+                    <HoverScrambleText text="JBN" /><span className="text-blue-500">.</span>
                 </Link>
 
                 {/* --- DESKTOP NAVIGATION --- */}
-                <div className="hidden md:flex items-center gap-10">
+                <div className="hidden md:flex items-center gap-8">
+                    
+                    {/* Command Menu Hint / Trigger */}
+                    <button 
+                        onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}
+                        className="flex items-center gap-6 px-3 py-1.5 rounded-lg border border-slate-700/50 bg-[#0d1117] text-xs text-slate-400 hover:text-white hover:border-slate-500 transition-colors group"
+                    >
+                        <span className="flex items-center gap-2">
+                            <Search size={14} className="group-hover:text-blue-400 transition-colors" /> 
+                            <HoverScrambleText text="Quick Menu..." />
+                        </span>
+                        <div className="flex items-center gap-1 font-mono text-[10px]">
+                            <kbd className="bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">⌘</kbd>
+                            <kbd className="bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">K</kbd>
+                        </div>
+                    </button>
+
                     {navLinks.map((link) => (
-                        <Link
-                            key={link.name}
-                            href={link.href}
-                            className="text-sm font-medium text-slate-300 transition-colors hover:text-white hover:underline decoration-blue-500 underline-offset-8 decoration-2"
-                        >
-                            {link.name}
-                        </Link>
+                        <Magnetic key={link.name}>
+                            <a
+                                href={link.href}
+                                onClick={(e) => handleScrollTo(e, link.href)}
+                                className="text-sm font-medium text-slate-300 transition-colors hover:text-white hover:underline decoration-blue-500 underline-offset-8 decoration-2"
+                            >
+                                <HoverScrambleText text={link.name} />
+                            </a>
+                        </Magnetic>
                     ))}
 
                     {/* Resume Button */}
-                    <a
-                        href="https://drive.google.com/file/d/1KW0UZZvpYgDZj1GqBMIPGpSP_8VdzoX2/view?usp=drive_link"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="rounded-full border border-slate-700 bg-slate-900/50 px-6 py-2.5 text-sm font-semibold text-white transition-all hover:bg-white hover:text-black hover:border-white"
-                    >
-                        Resume
-                    </a>
+                    <Magnetic>
+                        <a
+                            href="/Jesse_Ngolab_Resume.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="rounded-full border border-slate-700 bg-slate-900/50 px-6 py-2.5 text-sm font-semibold text-white transition-all hover:bg-white hover:text-black hover:border-white group"
+                        >
+                            <HoverScrambleText text="Resume" />
+                        </a>
+                    </Magnetic>
                 </div>
 
                 {/* --- MOBILE MENU BUTTON --- */}
                 <button
-                    className="block md:hidden text-white focus:outline-none"
+                    aria-label="Toggle menu"
+                    aria-expanded={mobileMenuOpen}
+                    className="block md:hidden text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded p-1"
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 >
                     <svg
@@ -79,38 +119,58 @@ export default function Navbar() {
                         {mobileMenuOpen ? (
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                         ) : (
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
                         )}
                     </svg>
                 </button>
             </div>
 
-            {/* --- MOBILE MENU OVERLAY --- */}
-            <div
-                className={`absolute top-full left-0 w-full overflow-hidden bg-black/95 backdrop-blur-xl transition-[max-height] duration-500 ease-in-out md:hidden ${
-                    mobileMenuOpen ? "max-h-screen" : "max-h-0"
-                }`}
-            >
-                <div className="flex flex-col items-center gap-8 py-10">
-                    {navLinks.map((link) => (
-                        <Link
-                            key={link.name}
-                            href={link.href}
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="text-xl font-bold text-slate-300 hover:text-white"
-                        >
-                            {link.name}
-                        </Link>
-                    ))}
-                    <a
-                        href="/resume.pdf"
-                        target="_blank"
-                        className="text-xl font-bold text-blue-400"
+            {/* --- MOBILE NAVIGATION --- */}
+            <AnimatePresence>
+                {mobileMenuOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "100vh" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="fixed inset-0 z-40 bg-black/95 backdrop-blur-xl md:hidden"
                     >
-                        Resume
-                    </a>
-                </div>
-            </div>
+                        <div className="flex h-full flex-col items-center justify-center space-y-12">
+                            {navLinks.map((link, i) => (
+                                <motion.div
+                                    key={link.name}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: i * 0.1 + 0.1 }}
+                                >
+                                    <a
+                                        href={link.href}
+                                        onClick={(e) => handleScrollTo(e, link.href)}
+                                        className="text-4xl font-black text-white hover:text-blue-500 transition-colors"
+                                    >
+                                        <HoverScrambleText text={link.name} />
+                                    </a>
+                                </motion.div>
+                            ))}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.4 }}
+                            >
+                                <a
+                                    href="/Jesse_Ngolab_Resume.pdf"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className="rounded-full bg-blue-600 px-8 py-3 text-lg font-bold text-white transition-colors hover:bg-blue-700"
+                                >
+                                    <HoverScrambleText text="Download Resume" />
+                                </a>
+                            </motion.div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </nav>
     );
 }
