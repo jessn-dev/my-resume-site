@@ -10,7 +10,7 @@ export default function HologramImage() {
             {/* Base Image */}
             <Image 
                 src="/assets/image_2.png" 
-                alt="Profile" 
+                alt="Jesse Ngolab Profile Photo" 
                 fill 
                 className="object-cover object-center grayscale group-hover:grayscale-0 transition-all duration-700"
             />

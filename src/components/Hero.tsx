@@ -143,9 +143,9 @@ export default function Hero() {
                 
                 {/* Left Text: Pixel Pusher */}
                 <div className="order-2 xl:order-1 flex flex-col items-center xl:items-start text-center xl:text-left gap-6 z-20 justify-self-end w-full">
-                    <h2 className="text-6xl md:text-7xl lg:text-[6rem] xl:text-[7rem] 2xl:text-[8rem] font-black tracking-tighter drop-shadow-2xl text-purple-400 leading-[0.9]">
+                    <h1 className="text-6xl md:text-7xl lg:text-[6rem] xl:text-[7rem] 2xl:text-[8rem] font-black tracking-tighter drop-shadow-2xl text-purple-400 leading-[0.9]">
                         Pixel<br className="hidden xl:block" /> Pusher.
-                    </h2>
+                    </h1>
                     <p className="max-w-[400px] text-lg font-medium leading-relaxed text-slate-400 italic">
                         "I'm not a professional; I'm just a hobbyist designer with an Adobe Creative Cloud subscription, creating UI designs that avoid the usual and add strange, delightful surprises."
                     </p>
@@ -179,7 +179,7 @@ export default function Hero() {
             </div>
 
             {/* Google-style Search Bar & Navigation */}
-            <div className="relative z-20 flex w-full flex-col items-center px-6">
+            <div className="relative z-20 flex w-full flex-col items-center px-6" aria-hidden="true">
                 <div className="group flex h-14 md:h-16 w-full max-w-[720px] items-center rounded-full border border-gray-500/30 bg-[var(--color-surface-100)] px-6 shadow-xl transition-all hover:bg-[var(--color-surface-200)] hover:shadow-2xl hover:border-gray-500/50">
                     <div className="pr-4 text-gray-400">
                         <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
